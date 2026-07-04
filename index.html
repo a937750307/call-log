@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>苹果通话记录详情页生成器</title>
+  <link href="layui/css/layui.css" rel="stylesheet">
+  <link href="css/style.css" rel="stylesheet">
+</head>
+<body>
+<form id="myForm">
+  <div class="layui-row layui-col-space15">
+    <div class="layui-col-xs12 layui-col-sm12 layui-col-md4 layui-col-md-offset2">
+      <div class="layui-card">
+        <div class="layui-card-header">苹果通话记录详情页生成器</div>
+        <div class="layui-card-body">
+
+          <div class="layui-row" style="margin-bottom: 10px;">
+            <div class="layui-col-md6">
+              <div class="layui-form-item">
+                <div class="layui-input-group">
+                  <div class="layui-input-split layui-input-prefix">时间</div>
+                  <div class="layui-input-wrap">
+                    <input type="text" class="layui-input" id="time" name="time" placeholder="手机时间：点选" value="">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="layui-col-md6">
+              <div class="layui-form-item">
+                <div class="layui-input-group">
+                  <div class="layui-input-split layui-input-prefix">电量</div>
+                  <div class="layui-input-wrap">
+                    <input type="number" lay-affix="number" name="battery" id="battery" value="80" lay-verify="required" placeholder="电池电量" lay-reqtext="电池电量" autocomplete="off" class="layui-input" step="1" min="0" max="100">
+                    <div class="layui-input-split layui-input-suffix">%</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="layui-form-item">
+            <div class="layui-input-wrap">
+              <div class="layui-input-prefix">
+                <i class="layui-icon layui-icon-engine"></i>
+              </div>
+              <input type="text" name="phone" id="phone" value="188 1111 2222" lay-verify="required" placeholder="电话" lay-reqtext="电话" autocomplete="off" class="layui-input" lay-affix="clear">
+            </div>
+          </div>
+          <div class="layui-form-item">
+            <div class="layui-input-wrap">
+              <div class="layui-input-prefix">
+                <i class="layui-icon layui-icon-engine"></i>
+              </div>
+              <input type="text" name="text1" id="text1" value="中国 北京 东城" lay-verify="required" placeholder="地区" lay-reqtext="地区" autocomplete="off" class="layui-input" lay-affix="clear">
+            </div>
+          </div>
+          <div class="layui-form-item">
+            <div class="layui-input-wrap">
+              <div class="layui-input-prefix">
+                <i class="layui-icon layui-icon-engine"></i>
+              </div>
+              <input type="text" name="text2" id="text2" value="" lay-verify="required" placeholder="日期" lay-reqtext="日期" autocomplete="off" class="layui-input" lay-affix="clear">
+            </div>
+          </div>
+          <div class="layui-form-item">
+            <div class="layui-input-wrap">
+              <div class="layui-input-prefix">
+                <i class="layui-icon layui-icon-engine"></i>
+              </div>
+              <input type="text" name="text3" id="text3" value="下午15:20  去电" lay-verify="required" placeholder="通话方式：下午12:00 去电/来电" lay-reqtext="通话方式：去电/来电" autocomplete="off" class="layui-input" lay-affix="clear">
+            </div>
+          </div>
+          <div class="layui-form-item">
+            <div class="layui-input-wrap">
+              <div class="layui-input-prefix">
+                <i class="layui-icon layui-icon-engine"></i>
+              </div>
+              <input type="text" name="text4" id="text4" value="13分钟" lay-verify="required" placeholder="通话时长，如：10分钟" lay-reqtext="通话时长，如：10分钟" autocomplete="off" class="layui-input" lay-affix="clear">
+            </div>
+          </div>
+          <div class="layui-form-item">
+            <button class="layui-btn layui-btn-fluid" type="button" id="refreshButton">确认修改</button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="layui-col-xs12 layui-col-sm12 layui-col-md4">
+      <div class="layui-card">
+        <div class="layui-card-header">显示区域（右键或长按保存图片）</div>
+        <div class="layui-card-body">
+          <canvas id="callCanvas"></canvas>
+          <a id="downloadLink" class="layui-btn layui-btn-normal" download="call_log.png">下载图片</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+
+<script src="layui/layui.js"></script>
+<script src="js/main.js"></script>
+<script>
+  layui.use(function () {
+    var laydate = layui.laydate;
+    // 自定义格式
+    laydate.render({
+      elem: '#time',
+      type: 'time',
+      format: 'H:mm'
+    });
+  });
+</script>
+    <style>
+      .beian-bar{width:100%;background:transparent;padding:12px 0;text-align:center;font-size:14px;line-height:1.6;border-top:1px solid transparent}
+      .beian-pc{display:flex;justify-content:center;align-items:center;gap:20px}
+      .beian-disclaimer{color:#e74c3c;white-space:nowrap}
+      .beian-icp{color:#333;text-decoration:none;white-space:nowrap}
+      .beian-gongan{display:inline-flex;align-items:center;gap:6px;color:#333;text-decoration:none;white-space:nowrap}
+      .beian-gongan img{width:16px;height:16px}
+      @media(max-width:768px){.beian-pc{display:none}.beian-mobile{display:flex;flex-direction:column;align-items:center;gap:6px}.beian-mobile a,.beian-mobile span{display:block;line-height:1.8}}
+      @media(min-width:769px){.beian-mobile{display:none}}
+    </style>
+    <div class="beian-bar">
+      <div class="beian-pc">
+        <span class="beian-disclaimer">本站内容仅供学习和交流，非商业用途</span>
+        <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer" class="beian-icp">浙ICP备2025187466号</a>
+        <a href="https://www.beian.gov.cn/portal/registerSystemInfo?recordcode=33030402001483" target="_blank" rel="noopener noreferrer" class="beian-gongan">
+          <img src="https://www.937788.xyz/gonganbeian.png" alt="公安备案" onerror="this.style.display='none'">
+          浙公网安备33030402001483号
+        </a>
+      </div>
+      <div class="beian-mobile">
+        <span class="beian-disclaimer">本站内容仅供学习和交流，非商业用途</span>
+        <a href="https://beian.miit.gov.cn/" target="_blank" rel="noopener noreferrer" class="beian-icp">浙ICP备2025187466号</a>
+        <a href="https://www.beian.gov.cn/portal/registerSystemInfo?recordcode=33030402001483" target="_blank" rel="noopener noreferrer" class="beian-gongan">
+          <img src="https://www.937788.xyz/gonganbeian.png" alt="公安备案" onerror="this.style.display='none'">
+          浙公网安备33030402001483号
+        </a>
+      </div>
+    </div>
+</body>
+</html>
