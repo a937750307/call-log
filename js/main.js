@@ -67,7 +67,7 @@
     ctx.fillRect(batteryX1, batteryY1, batteryX2 - batteryX1, batteryY2 - batteryY1);
 
     // 时间
-    ctx.font = '25px ' + fontFamily;
+    ctx.font = '30px ' + fontFamily;
     ctx.fillStyle = 'rgb(0, 0, 0)';
     ctx.fillText(time, 65, 61);
 
@@ -84,12 +84,12 @@
     ctx.fillText(region, (width - regionWidth) / 2, 464);
 
     // 日期
-    ctx.font = '26px ' + fontFamily;
+    ctx.font = '30px ' + fontFamily;
     ctx.fillStyle = 'rgb(0, 0, 0)';
     ctx.fillText(date, 56, 750);
 
     // 通话方式
-    ctx.font = '22px ' + fontFamily;
+    ctx.font = '29px ' + fontFamily;
     ctx.fillText(callType, 56, 809);
 
     // 通话时长，与“去电”左对齐
@@ -99,7 +99,7 @@
       const prefix = callType.substring(0, qudianIndex);
       durationX = 56 + ctx.measureText(prefix).width;
     }
-    ctx.font = '21px ' + fontFamily;
+    ctx.font = '28px ' + fontFamily;
     ctx.fillStyle = 'rgb(138, 138, 141)';
     ctx.fillText(duration, durationX, 849);
 
@@ -123,7 +123,7 @@
   // 显式加载自定义字体，避免绘制时字体未就绪
   function loadCustomFonts() {
     return Promise.all([
-      document.fonts.load('25px "PingFang"'),
+      document.fonts.load('30px "PingFang"'),
       document.fonts.load('49px "PingFang"')
     ]);
   }
